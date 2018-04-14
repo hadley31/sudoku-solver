@@ -1,17 +1,16 @@
-function loadSudoku (arr)
-{
-	values = [];
-	for (let i = 0; i < 81; i++)
-	{
-		values.push (arr[i]);
-	}
-}
 
 class Sudoku
 {
-	constructor ()
+	constructor (arr)
 	{
-		this.values = [];
+		if (arr)
+		{
+			this.values = arr;
+		}
+		else
+		{
+			this.values = [];
+		}
 	}
 }
 
@@ -19,32 +18,13 @@ class Sudoku
 
 Sudoku.prototype.getValue = function (x,  y)
 {
-	return values[getIndex (x,  y)];
+	return this.values[getIndex (x,  y)];
 };
 
 Sudoku.prototype.setValue = function(x,  y,  val)
 {
-	values[getIndex (x,  y)] = val;
+	this.values[getIndex (x,  y)] = val;
 };
-
-function getIndex (x,  y)
-{
-	if (x < 0 || x >= 9 || y < 0 || y >= 9)
-	{
-		return -1;
-	}
-	return x + 9 * y;
-}
-
-Sudoku.prototype.getX = function (i)
-{
-	return floor(i % 9);
-};
-
-function getY (i)
-{
-	return floor(i / 9);
-}
 
 Sudoku.prototype.getRow = function (n)
 {
@@ -100,6 +80,25 @@ Sudoku.prototype.testValue = function (i, n)
 		!contains (this.getRow (i), n) && 
 		!contains (this.getCol (i), n);
 };
+
+function getIndex (x,  y)
+{
+	if (x < 0 || x >= 9 || y < 0 || y >= 9)
+	{
+		return -1;
+	}
+	return x + 9 * y;
+}
+
+function getX (i)
+{
+	return floor(i % 9);
+}
+
+function getY (i)
+{
+	return floor(i / 9);
+}
 
 function contains (arr, n)
 {

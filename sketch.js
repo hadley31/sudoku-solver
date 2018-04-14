@@ -15,8 +15,6 @@ const test_sudoku = [
 	2, 0, 0, 0, 0, 0, 5, 9, 4
 ];
 
-let values = [];
-
 
 let currentIndex = 0;
 let indicies = [];
