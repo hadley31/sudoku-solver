@@ -33,19 +33,8 @@ function draw ()
 {
 	background(51);
 
-	solve_step ();
-
 	drawBoard ();
 	drawNumbers ();
-}
-
-function loadSudoku (arr)
-{
-	values = [];
-	for (let i = 0; i < 81; i++)
-	{
-		values.push (arr[i]);
-	}
 }
 
 
@@ -109,36 +98,6 @@ function drawNumbers ()
 	}
 }
 
-
-function getValue (x,  y)
-{
-	return values[getIndex (x,  y)];
-}
-
-function setValue (x,  y,  val)
-{
-	values[getIndex (x,  y)] = val;
-}
-
-function getIndex (x,  y)
-{
-	if (x < 0 || x >= 9 || y < 0 || y >= 9)
-	{
-		return -1;
-	}
-	return x + 9 * y;
-}
-
-function getX (i)
-{
-	return floor(i % 9);
-}
-
-function getY (i)
-{
-	return floor(i / 9);
-}
-
 function getPixelX (x)
 {
 	return x * SQUARE_SIZE;
@@ -147,83 +106,4 @@ function getPixelX (x)
 function getPixelY (y)
 {
 	return y * SQUARE_SIZE;
-}
-
-function getRow (n)
-{
-	n = getY (n);
-
-	let arr = [];
-
-	for (let i = 0; i < 9; i++)
-	{
-		arr.push (getValue (i,  n));
-	}
-
-	return arr;
-}
-
-
-function getCol (n)
-{
-	n = getX (n);
-
-	let arr = [];
-
-	for (let i = 0; i < 9; i++)
-	{
-		arr.push (getValue (n,  i));
-	}
-
-	return arr;
-}
-
-function getBox (n)
-{
-	let startX = floor(getX (n) / 3) * 3;
-	let startY = floor(getY (n) / 3) * 3;
-
-	let arr = [];
-
-	for (let i = 0; i < 3; i++)
-	{
-		for (let j = 0; j < 3; j++)
-		{
-			arr.push (getValue (startX + j,  startY + i));
-		}
-	}
-
-	return arr;
-}
-
-function contains (arr, n)
-{
-	for (let i = 0; i < arr.length; i++)
-	{
-		if (arr[i] == n)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-function solve_step ()
-{
-	
-}
-
-function getLastIndex ()
-{
-	if (indicies.length == 0)
-		return 0;
-	return indicies[indicies.length - 1];
-}
-
-function testValue (i, n)
-{
-	return values[i] == 0 && 
-		!contains (getBox (i), n) && 
-		!contains (getRow (i), n) && 
-		!contains (getCol (i), n);
 }
