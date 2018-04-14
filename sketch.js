@@ -1,7 +1,7 @@
 const WIDTH = 550;
 const HEIGHT = 700;
 
-const SQUARE_SIZE = WIDTH / 9;
+const SQUARE_SIZE = 60;
 
 const test_sudoku = [
 	6, 0, 9, 0, 0, 8, 3, 0, 2, 
@@ -18,13 +18,13 @@ const test_sudoku = [
 
 let currentIndex = 0;
 let indicies = [];
-
+let sudoku;
 
 function setup() 
 {
 	createCanvas(WIDTH,  HEIGHT);
 
-	loadSudoku (test_sudoku);
+	sudoku = new Sudoku (test_sudoku);
 }
 
 function draw ()
@@ -79,7 +79,7 @@ function drawNumbers ()
 	{
 		for (let j = 0; j < 9; j++)
 		{
-			let s = getValue (i,  j);
+			let s = sudoku.getValue (i,  j);
 			if (s > 0)
 			{
 				strokeWeight (1);

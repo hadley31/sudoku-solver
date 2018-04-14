@@ -81,6 +81,9 @@ Sudoku.prototype.testValue = function (i, n)
 		!contains (this.getCol (i), n);
 };
 
+
+
+
 function getIndex (x,  y)
 {
 	if (x < 0 || x >= 9 || y < 0 || y >= 9)
