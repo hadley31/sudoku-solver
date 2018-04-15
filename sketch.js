@@ -39,6 +39,7 @@ function draw ()
 
 function mousePressed()
 {
+	print ("sketch");
 	setNumSelectPosition (mouseX, mouseY);
 	revealNumSelect ();
 	return false;

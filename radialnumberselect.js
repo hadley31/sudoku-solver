@@ -10,6 +10,8 @@ function revealNumSelect ()
 	numSelectEnabled = true;
 }
 
+
+
 function hideNumSelect ()
 {
 	numSelectEnabled = false;
