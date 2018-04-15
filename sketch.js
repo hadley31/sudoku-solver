@@ -15,14 +15,13 @@ const TEST_SUDOKU = [
 
 
 let sudoku;
-let numSelect;
 
 function setup() 
 {
 	createCanvas(CANVAS_WIDTH,  CANVAS_HEIGHT);
 
 	sudoku = new Sudoku (100, 100, 700, TEST_SUDOKU);
-	numSelect = new NumberSelectWheel (85);
+	numSelectSize = 100;
 }
 
 function draw ()
@@ -30,86 +29,107 @@ function draw ()
 	background(51);
 
 	sudoku.show ();
-	numSelect.show();
+	showNumSelect ();
 }
 
 
 
 function mousePressed()
 {
-	numSelect.setPosition (mouseX, mouseY);
-	numSelect.reveal();
+	setNumSelectPosition (mouseX, mouseY);
+	revealNumSelect ();
 	return false;
 }
 
 function mouseReleased()
 {
-	numSelect.select();
-	numSelect.hide();
+	selectNumber ();
+	hideNumSelect ();
 	return false;
 }
 
 
-class NumberSelectWheel
+
+let numSelectX = 0;
+let numSelectY = 0;
+let numSelectSize;
+let numSelectEnabled = false;
+
+let numSelected = 0;
+
+function revealNumSelect ()
 {
-	constructor (size)
-	{
-		this.x = 0;
-		this.y = 0;
-		this.size = size;
-		this.enabled = false;
-	}
+	numSelectEnabled = true;
 }
 
-NumberSelectWheel.prototype.reveal = function ()
+function hideNumSelect ()
 {
-	this.enabled = true;
-};
+	numSelectEnabled = false;
+}
 
-NumberSelectWheel.prototype.hide = function ()
+function showNumSelect ()
 {
-	this.enabled = false;
-};
-
-NumberSelectWheel.prototype.show = function ()
-{
-	if (!this.enabled)
+	if (!numSelectEnabled)
 		return;
 
 	textAlign(CENTER, CENTER);
 
 	fill (100, 100, 100, 100);
-	ellipse(this.x, this.y, this.size * 2);
+	ellipse(numSelectX, numSelectY, numSelectSize * 2);
 
+	fill (200);
 	stroke (0);
 	strokeWeight (3);
-	line (this.x, this.y, mouseX, mouseY);
+
+	let mouseDistance = dist (mouseX, mouseY, numSelectX, numSelectY);
+	let mouseAngle = atan2 (mouseY - numSelectY, mouseX - numSelectX);
+
+	let length = min (numSelectSize, mouseDistance);
+
+	let x2 = numSelectX + length * cos (mouseAngle);
+	let y2 = numSelectY + length * sin (mouseAngle);
+
+	line (numSelectX, numSelectY, x2, y2);
+
+	let newSelect = -1;
 
 	for (let i = 0; i < 10; i++)
 	{
 		let angle = i * TWO_PI / 10;
 
-		let tx = this.x + this.size * sin(angle);
-		let ty = this.y - this.size * cos(angle);
+		let tx = numSelectX + numSelectSize * sin(angle);
+		let ty = numSelectY - numSelectSize * cos(angle);
 
-		let d = dist(mouseX, mouseY, tx, ty);
+		let distance = dist(tx, ty, x2, y2);
 
-		textSize(this.size - clamp (d, 0, this.size / 2));
+		if (distance < numSelectSize / 3)
+		{
+			newSelect = i;
+		}
+
+		textSize(numSelectSize - clamp (distance, 0, numSelectSize * 0.7));
 		text (i, tx, ty);
 	}
 
-};
+	numSelected = newSelect;
+}
 
-NumberSelectWheel.prototype.setPosition = function (x, y)
+function selectNumber ()
 {
-	this.x = x;
-	this.y = y;
-};
+	if (numSelected == -1)
+		return;
 
-NumberSelectWheel.prototype.select = function ()
+	let cellX = sudoku.getCellX (numSelectX);
+	let cellY = sudoku.getCellY (numSelectY);
+
+	sudoku.setValue (cellX, cellY, numSelected);
+}
+
+function setNumSelectPosition (x, y)
 {
-	print ("select");
-};
+	numSelectX = x;
+	numSelectY = y;
+}
 
 function clamp (a, min, max)
 {
