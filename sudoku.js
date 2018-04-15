@@ -1,17 +1,16 @@
 
 class Sudoku
 {
-	constructor (x, y, size, arr)
+	constructor (arr)
 	{
-		this.x = x;
-		this.y = y;
-		this.size = size;
-
 		this.values = arr ? arr : [];
 	}
 }
 
-
+Sudoku.prototype.loadValues = function (arr)
+{
+	this.values = arr;
+};
 
 Sudoku.prototype.getValue = function (x,  y)
 {
@@ -35,7 +34,7 @@ Sudoku.prototype.getRow = function (n)
 	}
 
 	return arr;
-}
+};
 
 
 Sudoku.prototype.getCol = function (n)
@@ -70,22 +69,12 @@ Sudoku.prototype.getBox = function (n)
 	return arr;
 };
 
-Sudoku.prototype.getCellX = function (px)
-{
-	return floor((px - this.x) / this.size * 9);
-};
-
-Sudoku.prototype.getCellY = function (py)
-{
-	return floor((py - this.y) / this.size * 9);
-};
-
-Sudoku.prototype.testValue = function (i, n)
+Sudoku.prototype.testValue = function (n, val)
 {
 	return values[i] == 0 && 
-		!contains (this.getBox (i), n) && 
-		!contains (this.getRow (i), n) && 
-		!contains (this.getCol (i), n);
+		!contains (this.getBox (n), val) && 
+		!contains (this.getRow (n), val) && 
+		!contains (this.getCol (n), val);
 };
 
 
