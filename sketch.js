@@ -18,37 +18,49 @@ let sudokuX = 100;
 let sudokuY = 100;
 let sudokuSize = 700;
 let sudoku;
+let solver;
 
 function setup() 
 {
 	createCanvas(CANVAS_WIDTH,  CANVAS_HEIGHT);
 
-	sudoku = new Sudoku (TEST_SUDOKU);
 	numSelectSize = 100;
+
+	sudoku = new Sudoku (TEST_SUDOKU);
+
+	solver = new BruteSolver (sudoku);
 }
 
 function draw ()
 {
 	background(51);
 
+	let stepsPerFrame = 50;
+
+	for (let i = 0; i < stepsPerFrame; i++)
+	{
+		solver.step ();
+	}
+
 	showSudoku(sudoku, sudokuX, sudokuY, sudokuSize);
-	showNumSelect ();
 }
 
 
 
 function mousePressed()
 {
-	print ("sketch");
-	setNumSelectPosition (mouseX, mouseY);
-	revealNumSelect ();
+//	solver.step();
+
+
+	//setNumSelectPosition (mouseX, mouseY);
+	//revealNumSelect ();
 	return false;
 }
 
 function mouseReleased()
 {
-	selectNumber ();
-	hideNumSelect ();
+	//selectNumber ();
+	//hideNumSelect ();
 	return false;
 }
 
@@ -102,7 +114,7 @@ function showSudoku (s, x, y, size)
 	{
 		for (let j = 0; j < 9; j++)
 		{
-			let val = s.getValue (i,  j);
+			let val = s.getValue (getIndex(i,  j));
 			if (val > 0)
 			{
 				let tx = x + (i + 0.5) * cellSize;

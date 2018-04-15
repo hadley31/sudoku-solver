@@ -12,14 +12,14 @@ Sudoku.prototype.loadValues = function (arr)
 	this.values = arr;
 };
 
-Sudoku.prototype.getValue = function (x,  y)
+Sudoku.prototype.getValue = function (n)
 {
-	return this.values[getIndex (x,  y)];
+	return this.values[n];
 };
 
-Sudoku.prototype.setValue = function(x,  y,  val)
+Sudoku.prototype.setValue = function(n,  val)
 {
-	this.values[getIndex (x,  y)] = val;
+	this.values[n] = val;
 };
 
 Sudoku.prototype.getRow = function (n)
@@ -30,7 +30,7 @@ Sudoku.prototype.getRow = function (n)
 
 	for (let i = 0; i < 9; i++)
 	{
-		arr.push (this.getValue (i,  n));
+		arr.push (this.getValue (getIndex(i,  n)));
 	}
 
 	return arr;
@@ -45,7 +45,7 @@ Sudoku.prototype.getCol = function (n)
 
 	for (let i = 0; i < 9; i++)
 	{
-		arr.push (this.getValue (n,  i));
+		arr.push (this.getValue (getIndex(n,  i)));
 	}
 
 	return arr;
@@ -53,8 +53,8 @@ Sudoku.prototype.getCol = function (n)
 
 Sudoku.prototype.getBox = function (n)
 {
-	let startX = floor(this.getX (n) / 3) * 3;
-	let startY = floor(this.getY (n) / 3) * 3;
+	let startX = floor(getX (n) / 3) * 3;
+	let startY = floor(getY (n) / 3) * 3;
 
 	let arr = [];
 
@@ -62,7 +62,7 @@ Sudoku.prototype.getBox = function (n)
 	{
 		for (let j = 0; j < 3; j++)
 		{
-			arr.push (this.getValue (startX + j,  startY + i));
+			arr.push (this.getValue (getIndex(startX + j,  startY + i)));
 		}
 	}
 
@@ -71,7 +71,7 @@ Sudoku.prototype.getBox = function (n)
 
 Sudoku.prototype.testValue = function (n, val)
 {
-	return values[i] == 0 && 
+	return this.values[n] == 0 && 
 		!contains (this.getBox (n), val) && 
 		!contains (this.getRow (n), val) && 
 		!contains (this.getCol (n), val);
