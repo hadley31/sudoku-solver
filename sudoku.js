@@ -81,6 +81,65 @@ Sudoku.prototype.testValue = function (i, n)
 		!contains (this.getCol (i), n);
 };
 
+Sudoku.prototype.show = function (x, y, s)
+{
+	let size = s / 9.0;
+
+
+	// Draw small lines
+
+	stroke (100);
+	strokeWeight(1);
+
+	for (let i = 1; i < 9; i += 3)
+	{
+		// Draw horizontal lines
+		line (x, y + size * i, x + s, y + size * i);
+		line (x, y + size * (i + 1), x + s, y + size * (i + 1));
+
+		// Draw vertical lines
+		line (x + size * i, y, x + size * i, y + s);
+		line (x + size * (i + 1), y, x + size * (i + 1), y + s);
+	}
+
+	// Draw large lines
+
+	stroke (0);
+	strokeWeight (3);
+
+	for (let i = 0; i <= 9; i += 3)
+	{
+		// Draw horizontal line
+		line (x, y + size * i, x + s, y + size * i);
+
+		// Draw vertical line
+		line (x + size * i, y, x + size * i, y + s);
+	}
+
+
+	// Draw numbers
+
+	for (let i = 0; i < 9; i++)
+	{
+		for (let j = 0; j < 9; j++)
+		{
+			let s = sudoku.getValue (i,  j);
+			if (s > 0)
+			{
+				strokeWeight (1);
+
+				textSize(SQUARE_SIZE * 0.7);
+				textAlign(CENTER, CENTER);
+
+				let px = getPixelX (i);
+				let py = getPixelY (j);
+
+				text (s,  px + SQUARE_SIZE / 2, py + SQUARE_SIZE / 2);
+			}
+		}
+	}
+};
+
 
 
 
