@@ -77,12 +77,11 @@ function showNumSelect ()
 	fill (100, 100, 100, 100);
 	ellipse(numSelectX, numSelectY, numSelectSize * 2);
 
-	fill (200);
 	stroke (0);
 	strokeWeight (3);
 
 	let mouseDistance = dist (mouseX, mouseY, numSelectX, numSelectY);
-	let mouseAngle = atan2 (mouseY - numSelectY, mouseX - numSelectX);
+	let mouseAngle = normAngle(atan2 (mouseY - numSelectY, mouseX - numSelectX));
 
 	let length = min (numSelectSize, mouseDistance);
 
@@ -95,19 +94,27 @@ function showNumSelect ()
 
 	for (let i = 0; i < 10; i++)
 	{
-		let angle = i * TWO_PI / 10;
+		let angle = normAngle(map (i * TWO_PI / 10, 0, TWO_PI, -HALF_PI, 3 * HALF_PI));
 
-		let tx = numSelectX + numSelectSize * sin(angle);
-		let ty = numSelectY - numSelectSize * cos(angle);
+		let tx = numSelectX + numSelectSize * cos(angle);
+		let ty = numSelectY + numSelectSize * sin(angle);
 
-		let distance = dist(tx, ty, x2, y2);
+		let tSize;
 
-		if (distance < numSelectSize / 3)
+		if (length > numSelectSize * 0.7 && abs (mouseAngle - angle) < TWO_PI / 20)
 		{
 			newSelect = i;
+
+			fill (200);
+			tSize = numSelectSize * 0.7;
+		}
+		else
+		{
+			fill (150);
+			tSize = numSelectSize * 0.4;
 		}
 
-		textSize(numSelectSize - clamp (distance, 0, numSelectSize * 0.7));
+		textSize(tSize);
 		text (i, tx, ty);
 	}
 
@@ -138,4 +145,9 @@ function clamp (a, min, max)
 	if (a > max)
 		return max;
 	return a;
+}
+
+function normAngle (a)
+{
+	return (a + TWO_PI) % TWO_PI;
 }
