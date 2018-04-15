@@ -7,14 +7,7 @@ class Sudoku
 		this.y = y;
 		this.size = size;
 
-		if (arr)
-		{
-			this.values = arr;
-		}
-		else
-		{
-			this.values = [];
-		}
+		this.values = arr ? arr : [];
 	}
 }
 
@@ -94,66 +87,6 @@ Sudoku.prototype.testValue = function (i, n)
 		!contains (this.getRow (i), n) && 
 		!contains (this.getCol (i), n);
 };
-
-Sudoku.prototype.show = function ()
-{
-	let cellSize = this.size / 9.0;
-
-
-	// Draw small lines
-
-	stroke (100);
-	strokeWeight(1);
-
-	for (let i = 1; i < 9; i += 3)
-	{
-		// Draw horizontal lines
-		line (this.x, this.y + cellSize * i, this.x + this.size, this.y + cellSize * i);
-		line (this.x, this.y + cellSize * (i + 1), this.x + this.size, this.y + cellSize * (i + 1));
-
-		// Draw vertical lines
-		line (this.x + cellSize * i, this.y, this.x + cellSize * i, this.y + this.size);
-		line (this.x + cellSize * (i + 1), this.y, this.x + cellSize * (i + 1), this.y + this.size);
-	}
-
-	// Draw large lines
-
-	stroke (0);
-	strokeWeight (3);
-
-	for (let i = 0; i <= 9; i += 3)
-	{
-		// Draw horizontal line
-		line (this.x, this.y + cellSize * i, this.x + this.size, this.y + cellSize * i);
-
-		// Draw vertical line
-		line (this.x + cellSize * i, this.y, this.x + cellSize * i, this.y + this.size);
-	}
-
-
-	// Draw numbers
-
-	fill (170);
-	strokeWeight (3);
-
-	textSize(cellSize * 0.8);
-	textAlign(CENTER, CENTER);
-
-	for (let i = 0; i < 9; i++)
-	{
-		for (let j = 0; j < 9; j++)
-		{
-			let val = this.getValue (i,  j);
-			if (val > 0)
-			{
-				let tx = this.x + (i + 0.5) * cellSize;
-				let ty = this.y + (j + 0.5) * cellSize;
-				text (val, tx, ty);
-			}
-		}
-	}
-};
-
 
 
 function getIndex (x,  y)

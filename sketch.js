@@ -28,7 +28,7 @@ function draw ()
 {
 	background(51);
 
-	sudoku.show ();
+	showSudoku(sudoku);
 	showNumSelect ();
 }
 
@@ -47,6 +47,69 @@ function mouseReleased()
 	hideNumSelect ();
 	return false;
 }
+
+
+
+function showSudoku (s)
+{
+	let cellSize = s.size / 9.0;
+
+
+	// Draw small lines
+
+	stroke (100);
+	strokeWeight(1);
+
+	for (let i = 1; i < 9; i += 3)
+	{
+		// Draw horizontal lines
+		line (s.x, s.y + cellSize * i, s.x + s.size, s.y + cellSize * i);
+		line (s.x, s.y + cellSize * (i + 1), s.x + s.size, s.y + cellSize * (i + 1));
+
+		// Draw vertical lines
+		line (s.x + cellSize * i, s.y, s.x + cellSize * i, s.y + s.size);
+		line (s.x + cellSize * (i + 1), s.y, s.x + cellSize * (i + 1), s.y + s.size);
+	}
+
+	// Draw large lines
+
+	stroke (0);
+	strokeWeight (3);
+
+	for (let i = 0; i <= 9; i += 3)
+	{
+		// Draw horizontal line
+		line (s.x, s.y + cellSize * i, s.x + s.size, s.y + cellSize * i);
+
+		// Draw vertical line
+		line (s.x + cellSize * i, s.y, s.x + cellSize * i, s.y + s.size);
+	}
+
+
+	// Draw numbers
+
+	fill (170);
+	strokeWeight (3);
+
+	textSize(cellSize * 0.8);
+	textAlign(CENTER, CENTER);
+
+	for (let i = 0; i < 9; i++)
+	{
+		for (let j = 0; j < 9; j++)
+		{
+			let val = s.getValue (i,  j);
+			if (val > 0)
+			{
+				let tx = s.x + (i + 0.5) * cellSize;
+				let ty = s.y + (j + 0.5) * cellSize;
+				text (val, tx, ty);
+			}
+		}
+	}
+}
+
+
 
 
 
