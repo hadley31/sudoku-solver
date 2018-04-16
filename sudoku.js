@@ -66,6 +66,7 @@ Sudoku.prototype.getBox = function (n)
 		}
 	}
 
+
 	return arr;
 };
 
