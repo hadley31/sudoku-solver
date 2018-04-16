@@ -1,5 +1,3 @@
-
-
 class BruteSolver
 {
 	constructor (sudoku)
