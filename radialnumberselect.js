@@ -87,3 +87,8 @@ function setNumSelectPosition (x, y)
 	numSelectX = x;
 	numSelectY = y;
 }
+
+function normAngle (a)
+{
+	return (a + TWO_PI) % TWO_PI;
+}

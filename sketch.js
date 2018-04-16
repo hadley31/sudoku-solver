@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author hadley31
+ * 
+ */
+
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 900;
 
@@ -124,11 +130,6 @@ function clamp (a, min, max)
 	if (a > max)
 		return max;
 	return a;
-}
-
-function normAngle (a)
-{
-	return (a + TWO_PI) % TWO_PI;
 }
 
 function getCellX (x, s, px)

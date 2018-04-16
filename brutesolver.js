@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author hadley31
+ * 
+ */
+
 class BruteSolver
 {
 	constructor (sudoku)
