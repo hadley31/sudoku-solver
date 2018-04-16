@@ -35,13 +35,6 @@ function draw ()
 {
 	background(51);
 
-	let stepsPerFrame = 50;
-
-	for (let i = 0; i < stepsPerFrame; i++)
-	{
-		solver.step ();
-	}
-
 	showSudoku(sudoku, sudokuX, sudokuY, sudokuSize);
 }
 
@@ -49,18 +42,17 @@ function draw ()
 
 function mousePressed()
 {
-//	solver.step();
+	setNumSelectPosition (mouseX, mouseY);
+	revealNumSelect ();
 
-
-	//setNumSelectPosition (mouseX, mouseY);
-	//revealNumSelect ();
 	return false;
 }
 
 function mouseReleased()
 {
-	//selectNumber ();
-	//hideNumSelect ();
+	selectNumber ();
+	hideNumSelect ();
+
 	return false;
 }
 
@@ -78,11 +70,11 @@ function showSudoku (s, x, y, size)
 
 	for (let i = 1; i < 9; i += 3)
 	{
-		// Draw horizontal lines
+		// horizontal
 		line (x, y + cellSize * i, x + size, y + cellSize * i);
 		line (x, y + cellSize * (i + 1), x + size, y + cellSize * (i + 1));
 
-		// Draw vertical lines
+		// vertical
 		line (x + cellSize * i, y, x + cellSize * i, y + size);
 		line (x + cellSize * (i + 1), y, x + cellSize * (i + 1), y + size);
 	}
@@ -94,10 +86,10 @@ function showSudoku (s, x, y, size)
 
 	for (let i = 0; i <= 9; i += 3)
 	{
-		// Draw horizontal line
+		// horizontal
 		line (x, y + cellSize * i, x + size, y + cellSize * i);
 
-		// Draw vertical line
+		// vertical
 		line (x + cellSize * i, y, x + cellSize * i, y + size);
 	}
 
@@ -114,7 +106,7 @@ function showSudoku (s, x, y, size)
 	{
 		for (let j = 0; j < 9; j++)
 		{
-			let val = s.getValue (getIndex(i,  j));
+			let val = s.getValue (index(i,  j));
 			if (val > 0)
 			{
 				let tx = x + (i + 0.5) * cellSize;

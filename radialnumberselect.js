@@ -79,7 +79,7 @@ function selectNumber ()
 	let cellX = getCellX (sudokuX, sudokuSize, numSelectX);
 	let cellY = getCellY (sudokuY, sudokuSize, numSelectY);
 
-	sudoku.setValue (getIndex(cellX, cellY), numSelected);
+	sudoku.setValue (index(cellX, cellY), numSelected);
 }
 
 function setNumSelectPosition (x, y)

@@ -29,7 +29,7 @@ Sudoku.prototype.getRow = function (n)
 
 	for (let i = 0; i < 9; i++)
 	{
-		arr.push (this.getValue (getIndex(i,  n)));
+		arr.push (this.getValue (index(i,  n)));
 	}
 
 	return arr;
@@ -44,7 +44,7 @@ Sudoku.prototype.getCol = function (n)
 
 	for (let i = 0; i < 9; i++)
 	{
-		arr.push (this.getValue (getIndex(n,  i)));
+		arr.push (this.getValue (index(n,  i)));
 	}
 
 	return arr;
@@ -61,7 +61,7 @@ Sudoku.prototype.getBox = function (n)
 	{
 		for (let j = 0; j < 3; j++)
 		{
-			arr.push (this.getValue (getIndex(startX + j,  startY + i)));
+			arr.push (this.getValue (index(startX + j,  startY + i)));
 		}
 	}
 
@@ -78,7 +78,7 @@ Sudoku.prototype.testValue = function (n, val)
 };
 
 
-function getIndex (x,  y)
+function index (x,  y)
 {
 	if (x < 0 || x >= 9 || y < 0 || y >= 9)
 	{
