@@ -10,78 +10,80 @@ class Sudoku
 	{
 		this.values = arr ? arr : [];
 	}
+
+	loadValues (arr)
+	{
+		this.values = arr;
+	}
+
+	getValue (n)
+	{
+		return this.values[n];
+	}
+
+	setValue (n,  val)
+	{
+		this.values[n] = val;
+	}
+
+	getRow (n)
+	{
+		n = getY (n);
+
+		let arr = [];
+
+		for (let i = 0; i < 9; i++)
+		{
+			arr.push (this.getValue (index(i,  n)));
+		}
+
+		return arr;
+	}
+
+
+	getCol (n)
+	{
+		n = getX (n);
+
+		let arr = [];
+
+		for (let i = 0; i < 9; i++)
+		{
+			arr.push (this.getValue (index(n,  i)));
+		}
+
+		return arr;
+	}
+
+	getBox (n)
+	{
+		let startX = floor(getX (n) / 3) * 3;
+		let startY = floor(getY (n) / 3) * 3;
+
+		let arr = [];
+
+		for (let i = 0; i < 3; i++)
+		{
+			for (let j = 0; j < 3; j++)
+			{
+				arr.push (this.getValue (index(startX + j,  startY + i)));
+			}
+		}
+
+
+		return arr;
+	}
+
+	testValue (n, val)
+	{
+		return this.values[n] == 0 && 
+			!contains (this.getBox (n), val) && 
+			!contains (this.getRow (n), val) && 
+			!contains (this.getCol (n), val);
+	}
 }
 
-Sudoku.prototype.loadValues = function (arr)
-{
-	this.values = arr;
-};
 
-Sudoku.prototype.getValue = function (n)
-{
-	return this.values[n];
-};
-
-Sudoku.prototype.setValue = function(n,  val)
-{
-	this.values[n] = val;
-};
-
-Sudoku.prototype.getRow = function (n)
-{
-	n = getY (n);
-
-	let arr = [];
-
-	for (let i = 0; i < 9; i++)
-	{
-		arr.push (this.getValue (index(i,  n)));
-	}
-
-	return arr;
-};
-
-
-Sudoku.prototype.getCol = function (n)
-{
-	n = getX (n);
-
-	let arr = [];
-
-	for (let i = 0; i < 9; i++)
-	{
-		arr.push (this.getValue (index(n,  i)));
-	}
-
-	return arr;
-};
-
-Sudoku.prototype.getBox = function (n)
-{
-	let startX = floor(getX (n) / 3) * 3;
-	let startY = floor(getY (n) / 3) * 3;
-
-	let arr = [];
-
-	for (let i = 0; i < 3; i++)
-	{
-		for (let j = 0; j < 3; j++)
-		{
-			arr.push (this.getValue (index(startX + j,  startY + i)));
-		}
-	}
-
-
-	return arr;
-};
-
-Sudoku.prototype.testValue = function (n, val)
-{
-	return this.values[n] == 0 && 
-		!contains (this.getBox (n), val) && 
-		!contains (this.getRow (n), val) && 
-		!contains (this.getCol (n), val);
-};
 
 
 function index (x,  y)
