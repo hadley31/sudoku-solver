@@ -19,53 +19,65 @@ const TEST_SUDOKU = [
 	2, 0, 0, 0, 0, 0, 5, 9, 4
 ];
 
-
-let sudokuX = 100;
-let sudokuY = 100;
-let sudokuSize = 700;
 let sudoku;
+let selector;
 let solver;
+let drawBounds;
 
 function setup() 
 {
 	createCanvas(CANVAS_WIDTH,  CANVAS_HEIGHT);
 
-	numSelectSize = 100;
+	numSelectSize = 50;
 
 	sudoku = new Sudoku (TEST_SUDOKU);
 
+	selector = new RadialSelector (sudoku, 100);
+
 	solver = new BruteSolver (sudoku);
+
+	drawBounds = new StretchDrawBounds (10, 10, 10, 10);
 }
 
 function draw ()
 {
 	background(51);
 
-	showSudoku(sudoku, sudokuX, sudokuY, sudokuSize);
+	drawSudoku(sudoku);
+	drawSelector (selector);
+
+	for (let i = 0; i < 1000; i++)
+	{
+		solver.step ();
+	}
+	
 }
 
 
 
 function mousePressed()
 {
-	setNumSelectPosition (mouseX, mouseY);
-	revealNumSelect ();
-
+	selector.setPosition (mouseX, mouseY);
+	selector.show ();
 	return false;
 }
 
 function mouseReleased()
 {
-	selectNumber ();
-	hideNumSelect ();
+	selector.hide ();
+	selector.push ();
 
 	return false;
 }
 
 
 
-function showSudoku (s, x, y, size)
+function drawSudoku (s)
 {
+	let x = drawBounds.x;
+	let y = drawBounds.y;
+	let size = drawBounds.w;
+
 	let cellSize = size / 9.0;
 
 
@@ -123,6 +135,14 @@ function showSudoku (s, x, y, size)
 	}
 }
 
+function drawSelector (s)
+{
+	if (s)
+	{
+		s.draw ();
+	}
+}
+
 function clamp (a, min, max)
 {
 	if (a < min)
@@ -132,12 +152,12 @@ function clamp (a, min, max)
 	return a;
 }
 
-function getCellX (x, s, px)
+function getCellX (px)
 {
-	return floor((px - x) / s * 9);
+	return floor((px - drawBounds.x) / drawBounds.w * 9);
 }
 
-function getCellY (y, s, py)
+function getCellY (py)
 {
-	return floor((py - y) / s * 9);
+	return floor((py - drawBounds.y) / drawBounds.h * 9);
 }
