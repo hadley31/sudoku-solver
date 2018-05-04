@@ -19,9 +19,24 @@ class BruteSolver {
 		}
 	}
 
+	start ()
+	{
+		this.enabled = true;
+	}
+
+	pause ()
+	{
+		this.enabled = false;
+	}
+
+	toggle ()
+	{
+		this.enabled = !this.enabled;
+	}
+
 	step() {
 
-		if (this.isCompleted ())
+		if (!this.enabled || this.isCompleted ())
 		{
 			return false;
 		}
@@ -68,10 +83,11 @@ class BruteSolver {
 		}
 	}
 
-	getNextNonZeroIndex (current)
+	revert ()
 	{
-		
-
-		return current;
+		this.sudoku.values = [];
+		for (let val of this.originalValues) {
+			this.sudoku.values.push(val);
+		}
 	}
 }

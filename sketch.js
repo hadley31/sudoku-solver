@@ -24,7 +24,7 @@ let selector;
 let solver;
 let drawBounds;
 
-function setup() 
+function setup()
 {
 	createCanvas(CANVAS_WIDTH,  CANVAS_HEIGHT);
 
@@ -46,10 +46,14 @@ function draw ()
 	drawSudoku(sudoku);
 	drawSelector (selector);
 
-	for (let i = 0; i < 1000; i++)
+	if (solver.enabled)
 	{
-		solver.step ();
+		for (let i = 0; i < 300; i++)
+		{
+			solver.step ();
+		}
 	}
+
 	
 }
 
@@ -71,12 +75,31 @@ function mouseReleased()
 }
 
 
+function keyPressed()
+{
+	switch (keyCode)
+	{
+		case 32:
+			if (solver.enabled)
+			{
+				solver.pause ();
+			}
+			else
+			{
+				solver = new BruteSolver (sudoku);
+				solver.start ();
+			}
+			break;
+	}
+}
+
+
 
 function drawSudoku (s)
 {
-	let x = drawBounds.x;
-	let y = drawBounds.y;
-	let size = drawBounds.w;
+	let x = drawBounds.getX ();
+	let y = drawBounds.getY ();
+	let size = drawBounds.getWidth ();
 
 	let cellSize = size / 9.0;
 
@@ -154,10 +177,10 @@ function clamp (a, min, max)
 
 function getCellX (px)
 {
-	return floor((px - drawBounds.x) / drawBounds.w * 9);
+	return floor((px - drawBounds.getX()) / drawBounds.getWidth() * 9);
 }
 
 function getCellY (py)
 {
-	return floor((py - drawBounds.y) / drawBounds.h * 9);
+	return floor((py - drawBounds.getY()) / drawBounds.getHeight() * 9);
 }

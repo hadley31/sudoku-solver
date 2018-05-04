@@ -23,6 +23,9 @@ class Sudoku
 
 	setValue (n,  val)
 	{
+		if (val < 0 || val > 9)
+			return;
+		
 		this.values[n] = val;
 	}
 

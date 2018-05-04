@@ -1,21 +1,61 @@
 class DrawBounds
 {
-	constructor (x, y, w, h)
+	constructor (x, y, width, height)
 	{
 		this.x = x;
 		this.y = y;
-		this.w = w;
-		this.h = h;
+		this.width = width;
+		this.height = height;
+	}
+
+	getX ()
+	{
+		return this.x;
+	}
+
+	getY ()
+	{
+		return this.y;
+	}
+
+	getWidth ()
+	{
+		return this.width;
+	}
+
+	getHeight ()
+	{
+		return this.height;
 	}
 }
 
 class StretchDrawBounds
 {
-	constructor (l, t, r, b)
+	constructor (left, top, right, bottom)
 	{
-		this.x = l;
-		this.y = t;
-		this.w = CANVAS_WIDTH - l - r;
-		this.h = CANVAS_HEIGHT - t - b;
+		this.left = left;
+		this.top = top;
+		this.right = right;
+		this.bottom = bottom;
+	}
+
+	getX ()
+	{
+		return this.left;
+	}
+
+	getY ()
+	{
+		return this.top;
+	}
+
+	getWidth ()
+	{
+		return CANVAS_WIDTH - this.left - this.right;
+	}
+
+	getHeight ()
+	{
+		return CANVAS_HEIGHT - this.top - this.bottom;
 	}
 }
