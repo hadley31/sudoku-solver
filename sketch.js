@@ -22,7 +22,7 @@ const TEST_SUDOKU = [
 let sudoku;
 let selector;
 let solver;
-let drawBounds;
+let sudokuDrawBounds;
 
 function setup()
 {
@@ -36,25 +36,23 @@ function setup()
 
 	solver = new BruteSolver (sudoku);
 
-	drawBounds = new StretchDrawBounds (10, 10, 10, 10);
+	sudokuDrawBounds = new StretchDrawBounds (10, 10, 10, 10);
 }
 
 function draw ()
 {
 	background(51);
 
-	drawSudoku(sudoku);
+	drawSudoku(sudoku, sudokuDrawBounds);
 	drawSelector (selector);
 
-	if (solver.enabled)
+	if (solver.enabled && !solver.isCompleted ())
 	{
 		for (let i = 0; i < 300; i++)
 		{
 			solver.step ();
 		}
 	}
-
-	
 }
 
 
@@ -95,7 +93,7 @@ function keyPressed()
 
 
 
-function drawSudoku (s)
+function drawSudoku (s, drawBounds)
 {
 	let x = drawBounds.getX ();
 	let y = drawBounds.getY ();
@@ -177,10 +175,10 @@ function clamp (a, min, max)
 
 function getCellX (px)
 {
-	return floor((px - drawBounds.getX()) / drawBounds.getWidth() * 9);
+	return floor((px - sudokuDrawBounds.getX()) / sudokuDrawBounds.getWidth() * 9);
 }
 
 function getCellY (py)
 {
-	return floor((py - drawBounds.getY()) / drawBounds.getHeight() * 9);
+	return floor((py - sudokuDrawBounds.getY()) / sudokuDrawBounds.getHeight() * 9);
 }

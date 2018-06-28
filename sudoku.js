@@ -77,6 +77,61 @@ class Sudoku
 		return arr;
 	}
 
+	getRowOthers (n)
+	{
+		let x = getX (n);
+		let y = getY (n);
+
+		let arr = [];
+
+		for (let i = 0; i < 9; i++)
+		{
+			if (i == x)
+				continue;
+
+			arr.push (this.getValue (index(i,  y)));
+		}
+
+		return arr;
+	}
+
+	getColOthers ()
+	{
+		let x = getX (n);
+		let y = getY (n);
+
+		let arr = [];
+
+		for (let i = 0; i < 9; i++)
+		{
+			if (i == y)
+				continue;
+			
+			arr.push (this.getValue (index(x,  i)));
+		}
+
+		return arr;
+	}
+
+	getBoxOthers ()
+	{
+		let startX = floor(getX (n) / 3) * 3;
+		let startY = floor(getY (n) / 3) * 3;
+
+		let arr = [];
+
+		for (let i = 0; i < 3; i++)
+		{
+			for (let j = 0; j < 3; j++)
+			{
+				arr.push (this.getValue (index(startX + j,  startY + i)));
+			}
+		}
+
+
+		return arr;
+	}
+
 	testValue (n, val)
 	{
 		return this.values[n] == 0 && 
