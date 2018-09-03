@@ -28,8 +28,6 @@ function setup()
 {
 	createCanvas(CANVAS_WIDTH,  CANVAS_HEIGHT);
 
-	numSelectSize = 50;
-
 	sudoku = new Sudoku (TEST_SUDOKU);
 
 	selector = new RadialSelector (sudoku, 100);
@@ -90,7 +88,6 @@ function keyPressed()
 			break;
 	}
 }
-
 
 
 function drawSudoku (s, drawBounds)
@@ -156,6 +153,7 @@ function drawSudoku (s, drawBounds)
 	}
 }
 
+
 function drawSelector (s)
 {
 	if (s)
@@ -163,6 +161,7 @@ function drawSelector (s)
 		s.draw ();
 	}
 }
+
 
 function clamp (a, min, max)
 {
@@ -173,10 +172,12 @@ function clamp (a, min, max)
 	return a;
 }
 
+
 function getCellX (px)
 {
 	return floor((px - sudokuDrawBounds.getX()) / sudokuDrawBounds.getWidth() * 9);
 }
+
 
 function getCellY (py)
 {

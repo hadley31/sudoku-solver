@@ -142,8 +142,6 @@ class Sudoku
 }
 
 
-
-
 function index (x,  y)
 {
 	if (x < 0 || x >= 9 || y < 0 || y >= 9)
